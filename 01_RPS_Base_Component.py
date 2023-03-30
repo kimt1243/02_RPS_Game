@@ -16,10 +16,12 @@ def check_rounds():
                 # If response is too low, go back to start of loop 
                 if response < 1:
                     print(response_error)
+                    print()
                     continue
 
             except ValueError:
                 print(response_error)
+                print()
                 continue
 
         return response
@@ -79,16 +81,28 @@ while end_game == "no":
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
 
     print(heading)
-    choose_instruction = "Choose between rock / paper / " \
-                         "scissors (or xxx to quit):  "
-
+    choose_instruction = "Choose between rock / paper / scissors (or xxx to quit):  "
     choose_error = "Please choose from rock / paper / scissors (or xxx to quit)"
 
     # Ask user for choice and check it's valid
     choose = choice_checker(choose_instruction, rps_list, choose_error)
+
+    # get computer choice
+    comp_choice = random.choice(rps_list[:-1])
+    print("Comp Choice: ", comp_choice)
+    
+    # compare choices
 
     # End game if exit code is typed
     if choose == "xxx":
         break
 # Ask user if they want to see their game history.
 # If 'yes' show game history
+
+    print()
+    print("You chose {}".format(choose))
+
+    rounds_played += 1
+
+    if rounds_played == rounds:
+        break
