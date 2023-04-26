@@ -1,10 +1,11 @@
 import random
 
-
 # Functions go here
+
+
 def check_rounds():
     while True:
-        response = input("How many rounds: ")
+        response = input("How many rounds do you want to play? (<enter> for infinite rounds): ")
 
         response_error = ("Please type either <enter> or and integer "
                           "that is more than 0")
@@ -67,6 +68,10 @@ choose_instruction = "Please choose between rock / paper " \
 # Ask user for # of rounds, <enter> for infinite mode
 rounds = check_rounds()
 
+# Rounds won will be calculated (total - draw - lost)
+rounds_lost = 0
+rounds_drawn = 0
+
 end_game = "no"
 while end_game == "no":
 
@@ -85,24 +90,44 @@ while end_game == "no":
     choose_error = "Please choose from rock / paper / scissors (or xxx to quit)"
 
     # Ask user for choice and check it's valid
-    choose = choice_checker(choose_instruction, rps_list, choose_error)
-
-    # get computer choice
+    user_choice = choice_checker(choose_instruction, rps_list, choose_error)
     comp_choice = random.choice(rps_list[:-1])
-    print("Comp Choice: ", comp_choice)
-    
-    # compare choices
 
-    # End game if exit code is typed
-    if choose == "xxx":
-        break
-# Ask user if they want to see their game history.
-# If 'yes' show game history
+    # compare choices
+    if user_choice == comp_choice:
+        result = "It's a tie"
+        rounds_drawn += 1
+    elif user_choice == "rock" and comp_choice == "scissors":
+        result = "You win"
+    elif user_choice == "paper" and comp_choice == "rock":
+        result = "You win"
+    elif user_choice == "scissors" and comp_choice == "paper":
+        result = "You win"
+    else:
+        result = "You lose"
+        rounds_lost += 1
 
     print()
-    print("You chose {}".format(choose))
+    print(f'{user_choice} vs {comp_choice} : {result}')
 
     rounds_played += 1
 
     if rounds_played == rounds:
         break
+
+    # End game if exit code is typed
+    if user_choice == "xxx":
+        break
+# Ask user if they want to see their game history.
+# Quick Calculations (stats)
+rounds_won = rounds_played - rounds_drawn - rounds_lost
+
+# End of Game statements
+print()
+print("------ End Game Summary ------")
+print(f'Won: {rounds_won} \t/\t Lost: {rounds_lost} \t/\t Drawn: {rounds_drawn}')
+print()
+print("!!!! Thanks for playing !!!!")
+
+# Ask user if they want to see their game history.
+# If 'yes' show game history
