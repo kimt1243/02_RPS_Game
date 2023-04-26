@@ -71,6 +71,7 @@ rounds = check_rounds()
 # Rounds won will be calculated (total - draw - lost)
 rounds_lost = 0
 rounds_drawn = 0
+rounds_won = rounds_played - rounds_lost - rounds_drawn
 
 end_game = "no"
 while end_game == "no":
@@ -119,6 +120,23 @@ while end_game == "no":
     if user_choice == "xxx":
         break
 # Ask user if they want to see their game history.
+# Calculate Game Stats
+percent_win = rounds_won / rounds_played * 100
+percent_lose = rounds_lost / rounds_played * 100
+percent_draw = rounds_drawn / rounds_played * 100
+
+print()
+print("----- Game History -----")
+for game in game_summary:
+    print(game)
+
+print()
+
+# displays game stats with % values to the nearest whole number
+print("===== Game Statistics =====")
+print("Win: {}, ({:.0f}%) \nLoss: {}, "
+      "({:.0f}%) \nTie: {}, ({:.0f}%)".format(rounds_won, percent_win, rounds_lost, percent_lose,
+                                              rounds_drawn, percent_draw))
 # Quick Calculations (stats)
 rounds_won = rounds_played - rounds_drawn - rounds_lost
 
@@ -129,5 +147,4 @@ print(f'Won: {rounds_won} \t/\t Lost: {rounds_lost} \t/\t Drawn: {rounds_drawn}'
 print()
 print("!!!! Thanks for playing !!!!")
 
-# Ask user if they want to see their game history.
-# If 'yes' show game history
+
