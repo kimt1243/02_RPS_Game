@@ -1,5 +1,6 @@
 import random
 
+
 # Functions go here
 
 
@@ -29,7 +30,6 @@ def check_rounds():
 
 
 def choice_checker(question, valid_list, error):
-
     while True:
 
         # Ask user for choice
@@ -55,23 +55,23 @@ def choice_checker(question, valid_list, error):
 yes_no_list = ["yes", "no"]
 rps_list = ["rock", "paper", "scissors", "xxx"]
 
+game_summary = []
+
+rounds_played = 0
+rounds_lost = 0
+rounds_drawn = 0
+
+choose_instruction = "Please choose between rock / paper " \
+                     "/ scissor "
+
 # Ask user if they have played the game before.
 # If 'no', show instructions
 # If 'yes', continue game
-
-
-# ask user for # of rounds then loop...
-rounds_played = 0
-choose_instruction = "Please choose between rock / paper " \
-                     "/ scissor "
 
 # Ask user for # of rounds, <enter> for infinite mode
 rounds = check_rounds()
 
 # Rounds won will be calculated (total - draw - lost)
-rounds_lost = 0
-rounds_drawn = 0
-rounds_won = rounds_played - rounds_lost - rounds_drawn
 
 end_game = "no"
 while end_game == "no":
@@ -92,6 +92,14 @@ while end_game == "no":
 
     # Ask user for choice and check it's valid
     user_choice = choice_checker(choose_instruction, rps_list, choose_error)
+
+    # End game if exit code is typed
+    if user_choice == "xxx" and rounds_played > 0:
+        break
+    elif user_choice == "xxx":
+        print("You have to play at least one round!")
+        continue
+
     comp_choice = random.choice(rps_list[:-1])
 
     # compare choices
@@ -109,18 +117,20 @@ while end_game == "no":
         rounds_lost += 1
 
     print()
-    print(f'{user_choice} vs {comp_choice} : {result}')
+    feedback = f'{user_choice} vs {comp_choice} : {result}'
+    print(feedback)
 
     rounds_played += 1
+    outcome = f'Round {rounds_played}: {feedback}'
+    game_summary.append(outcome)
 
     if rounds_played == rounds:
         break
 
-    # End game if exit code is typed
-    if user_choice == "xxx":
-        break
 # Ask user if they want to see their game history.
 # Calculate Game Stats
+rounds_won = rounds_played - rounds_lost - rounds_drawn
+
 percent_win = rounds_won / rounds_played * 100
 percent_lose = rounds_lost / rounds_played * 100
 percent_draw = rounds_drawn / rounds_played * 100
@@ -146,5 +156,3 @@ print("------ End Game Summary ------")
 print(f'Won: {rounds_won} \t/\t Lost: {rounds_lost} \t/\t Drawn: {rounds_drawn}')
 print()
 print("!!!! Thanks for playing !!!!")
-
-
